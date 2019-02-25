@@ -1,11 +1,11 @@
 {
     "name": "@dekproject/redis",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Redis interface plugin for DEK",
     "main": "./build/index.js",
     "scripts": {
         "test": "mocha",
-        "sample": "babel-node sample --presets env",
+        "sample": "npm run build && babel-node sample --presets env",
         "build": "babel src -s -D -d build --presets env"
     },
     "repository": {
@@ -30,7 +30,6 @@
         "mocha": "^6.0.1"
     },
     "dependencies": {
-        "@dekproject/scope": "^1.0.6",
         "ioredis": "^4.6.2"
     }
 }

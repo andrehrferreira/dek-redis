@@ -37,10 +37,17 @@ export default async () => {
             process.exit(-1);
         }
         else {
-            if(env.PLUGIN_DEBUG == 'true')
-                console.log(`[ Redis Plugin ] - Successfully signed`);
+            try {
+                let redis = new Redis(redisConfig);
 
-            $.set("redis", new Redis(redisConfig));
+                if(env.PLUGIN_DEBUG == 'true')
+                    console.log(`[ Redis Plugin ] - Successfully signed`);
+
+                $.set("redis", redis);
+            }
+            catch (e) {
+                console.log(`[ Redis Plugin ] - ${e.message}`)
+            }
         }
     }
     catch(e){
