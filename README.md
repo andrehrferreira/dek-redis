@@ -22,12 +22,6 @@ REDIS_DB=0
 
 ## Usage
 
-Using direct
-
-```bash
-$ npm i @dekproject/scope
-```
-
 Using in the standard DEK skeleton
 
 ```js
