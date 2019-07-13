@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import { $, plugins } from "@dekproject/scope";
 
 (async () => {
-    dotenv.config({ path: "./sample/.env" });
+    dotenv.config();
     await plugins("./");
 
     $.wait("redis").then(() => {

@@ -7,15 +7,7 @@ Redis interface plugin for DEK
 To install the bootstrap we recommend using the CLI
 
 ```bash
-$ npm i -g @dekproject/cli
-$ dek install redis
-```
-
-or
-
-```bash
-$ npm i @dekproject/redis @dekproject/scope
-$ nano .env
+$ yarn add @dekproject/redis --save
 ```
 
 In the .env file add the following settings
@@ -34,21 +26,6 @@ Using direct
 
 ```bash
 $ npm i @dekproject/scope
-```
-
-```js
-import dotenv from "dotenv";
-import { $, plugins } from "@dekproject/scope";
-
-(async () => {
-    dotenv.config({ path: "./sample/.env" });
-    await plugins("./");
-
-    $.redis.multi().set("foo", "bar").get("foo").exec(function (err, results) {
-        if(err) console.log(err);
-        else console.log(results);
-    });
-})();
 ```
 
 Using in the standard DEK skeleton
