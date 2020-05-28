@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _ioredis = require("ioredis");
@@ -42,14 +44,17 @@ var Redis = function (_IORedis) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                _context.next = 2;
+                                if ((typeof value === "undefined" ? "undefined" : _typeof(value)) == "object") {
+                                    value = JSON.stringify(value);
+                                }
+                                _context.next = 3;
                                 return _snappy2.default.compressSync(value);
 
-                            case 2:
+                            case 3:
                                 buffer = _context.sent;
                                 return _context.abrupt("return", this.setBuffer(key, buffer));
 
-                            case 4:
+                            case 5:
                             case "end":
                                 return _context.stop();
                         }
@@ -68,9 +73,13 @@ var Redis = function (_IORedis) {
         value: function getCompress(key) {
             var _this2 = this;
 
+            var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+                _ref2$json = _ref2.json,
+                json = _ref2$json === undefined ? true : _ref2$json;
+
             return new Promise(function () {
-                var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(resolve, reject) {
-                    var buffer;
+                var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(resolve, reject) {
+                    var buffer, uncompress;
                     return regeneratorRuntime.wrap(function _callee2$(_context2) {
                         while (1) {
                             switch (_context2.prev = _context2.next) {
@@ -81,32 +90,37 @@ var Redis = function (_IORedis) {
 
                                 case 3:
                                     buffer = _context2.sent;
-                                    _context2.t0 = resolve;
-                                    _context2.next = 7;
+                                    _context2.next = 6;
                                     return _snappy2.default.uncompressSync(buffer, { asBuffer: false });
 
-                                case 7:
-                                    _context2.t1 = _context2.sent;
-                                    (0, _context2.t0)(_context2.t1);
-                                    _context2.next = 14;
+                                case 6:
+                                    uncompress = _context2.sent;
+
+
+                                    if (json) {
+                                        resolve(JSON.parse(uncompress));
+                                    } else {
+                                        resolve(uncompress);
+                                    }
+                                    _context2.next = 13;
                                     break;
 
-                                case 11:
-                                    _context2.prev = 11;
-                                    _context2.t2 = _context2["catch"](0);
+                                case 10:
+                                    _context2.prev = 10;
+                                    _context2.t0 = _context2["catch"](0);
 
-                                    reject(_context2.t2);
+                                    reject(_context2.t0);
 
-                                case 14:
+                                case 13:
                                 case "end":
                                     return _context2.stop();
                             }
                         }
-                    }, _callee2, _this2, [[0, 11]]);
+                    }, _callee2, _this2, [[0, 10]]);
                 }));
 
-                return function (_x3, _x4) {
-                    return _ref2.apply(this, arguments);
+                return function (_x4, _x5) {
+                    return _ref3.apply(this, arguments);
                 };
             }());
         }
