@@ -6,11 +6,13 @@ class Redis extends IORedis {
         super(opts);
     }
 
-    async setCompress (key, value) {
+    async setCompress (key, value, expiryMode, time) {
         if (typeof value == "object") {
             value = JSON.stringify(value);
         }
         let buffer = await snappy.compressSync(value);
+        if (expiryMode && time)
+            return this.setBuffer(key, buffer, expiryMode, time);
         return this.setBuffer(key, buffer);
     }
 
@@ -19,7 +21,7 @@ class Redis extends IORedis {
             try {
                 let buffer = await this.getBuffer(key);
                 let uncompress = await snappy.uncompressSync(buffer, { asBuffer: false });
-                
+
                 if (json) {
                     resolve(JSON.parse(uncompress));
                 } else {

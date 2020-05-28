@@ -1,6 +1,6 @@
 {
     "name": "@dekproject/redis",
-    "version": "2.0.3",
+    "version": "2.0.4",
     "description": "Redis interface plugin for DEK",
     "main": "./build/index.js",
     "scripts": {

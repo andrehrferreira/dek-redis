@@ -38,8 +38,8 @@ import { $, plugins } from "@dekproject/scope";
 
         console.time("Writing on the master and reading the slaves");
         //Writing on the master and reading the slaves
-        await $.redis.set("foo4", "bar4");
-        let result5 = await $.redislb.getSlave().get("foo4");
+        await $.redis.set("foo5", "bar4");
+        let result5 = await $.redislb.getSlave().get("foo5");
         console.log({ result5 });
 
         console.timeLog("Writing on the master and reading the slaves");
@@ -49,6 +49,13 @@ import { $, plugins } from "@dekproject/scope";
         await $.redis.setCompress("foo6", [{ bar: "bar6" }]);
         let result6 = await $.redislb.getSlave().getCompress("foo6");
         console.log({ result6 });
+        console.timeLog("Writing on the master and reading the slaves Compress");
+
+        console.time("Writing on the master and reading the slaves Compress with expiryMode");
+        //Writing on the master and reading the slaves mode Compress
+        await $.redis.setCompress("foo7", [{ bar: "bar7" }], "EX", 10);
+        let result7 = await $.redislb.getSlave().getCompress("foo7");
+        console.log({ result7 });
         console.timeLog("Writing on the master and reading the slaves Compress");
     });
 })();
