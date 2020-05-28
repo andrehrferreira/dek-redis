@@ -1,6 +1,6 @@
 {
     "name": "@dekproject/redis",
-    "version": "1.1.2",
+    "version": "2.0.1",
     "description": "Redis interface plugin for DEK",
     "main": "./build/index.js",
     "scripts": {
@@ -24,7 +24,8 @@
     },
     "homepage": "https://github.com/dekproject/redis#readme",
     "dependencies": {
-        "ioredis": "^4.6.2"
+        "ioredis": "^4.6.2",
+        "snappy": "^6.3.4"
     },
     "devDependencies": {
         "@dekproject/scope": "^1.1.2",
