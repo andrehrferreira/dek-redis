@@ -33,13 +33,28 @@ or
 REDIS_URI=localhost:6379
 ```
 
+## Load Balance
+
 To configure loadbalance just configure a list of settings separated by commas
 
 ```
 REDIS_SLAVES=localhost:6379,localhost:6380,localhost:6381
 ```
 
-## Load Balance
+```js
+import { app, redis, redislb } from "@dekproject/scope";
+
+$.wait(["redislb"]).then(async () => {
+    console.time("Loading Load Balance");
+
+    //Load Balance 
+    await redislb.getSlave().set("foo3", "bar3");
+    let result = await redislb.getSlave().get("foo3");
+    console.log(result);
+
+    console.timeLog("Loading Load Balance");
+});
+```
 
 ## Usage
 
