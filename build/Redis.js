@@ -38,7 +38,7 @@ var Redis = function (_IORedis) {
     _createClass(Redis, [{
         key: "setCompress",
         value: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(key, value) {
+            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(key, value, expiryMode, time) {
                 var buffer;
                 return regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
@@ -52,9 +52,18 @@ var Redis = function (_IORedis) {
 
                             case 3:
                                 buffer = _context.sent;
+
+                                if (!(expiryMode && time)) {
+                                    _context.next = 6;
+                                    break;
+                                }
+
+                                return _context.abrupt("return", this.setBuffer(key, buffer, expiryMode, time));
+
+                            case 6:
                                 return _context.abrupt("return", this.setBuffer(key, buffer));
 
-                            case 5:
+                            case 7:
                             case "end":
                                 return _context.stop();
                         }
@@ -62,7 +71,7 @@ var Redis = function (_IORedis) {
                 }, _callee, this);
             }));
 
-            function setCompress(_x, _x2) {
+            function setCompress(_x, _x2, _x3, _x4) {
                 return _ref.apply(this, arguments);
             }
 
@@ -90,10 +99,16 @@ var Redis = function (_IORedis) {
 
                                 case 3:
                                     buffer = _context2.sent;
-                                    _context2.next = 6;
+
+                                    if (!buffer) {
+                                        _context2.next = 11;
+                                        break;
+                                    }
+
+                                    _context2.next = 7;
                                     return _snappy2.default.uncompressSync(buffer, { asBuffer: false });
 
-                                case 6:
+                                case 7:
                                     uncompress = _context2.sent;
 
 
@@ -102,24 +117,31 @@ var Redis = function (_IORedis) {
                                     } else {
                                         resolve(uncompress);
                                     }
-                                    _context2.next = 13;
+                                    _context2.next = 12;
                                     break;
 
-                                case 10:
-                                    _context2.prev = 10;
+                                case 11:
+                                    resolve(null);
+
+                                case 12:
+                                    _context2.next = 17;
+                                    break;
+
+                                case 14:
+                                    _context2.prev = 14;
                                     _context2.t0 = _context2["catch"](0);
 
                                     reject(_context2.t0);
 
-                                case 13:
+                                case 17:
                                 case "end":
                                     return _context2.stop();
                             }
                         }
-                    }, _callee2, _this2, [[0, 10]]);
+                    }, _callee2, _this2, [[0, 14]]);
                 }));
 
-                return function (_x4, _x5) {
+                return function (_x6, _x7) {
                     return _ref3.apply(this, arguments);
                 };
             }());
