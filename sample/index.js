@@ -63,5 +63,10 @@ import { $, plugins } from "@dekproject/scope";
         let result8 = await $.redis.getCompress("foo8");
         console.log({ result8 });
         console.timeLog("getCompress null");
+
+        console.time("redisKeys f*");
+        let result9 = await $.rediskeys.keys("f*");
+        console.log({ result9 });
+        console.timeLog("redisKeys f*");
     });
 })();

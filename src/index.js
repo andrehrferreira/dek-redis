@@ -55,6 +55,12 @@ export default async () => {
                     let redisLoadBalance = new LoadBalance(redisConfig['slaves']);
                     $.set("redislb", redisLoadBalance);
                 }
+                if(Object.prototype.hasOwnProperty.call(env, "REDIS_KEYS_HOST")){
+                    redisConfig["host"] = env.REDIS_KEYS_HOST;
+                    redisConfig["port"] = env.REDIS_KEYS_PORT || env.REDIS_PORT;;
+                    let redisKeys = new Redis(redisConfig)
+                    $.set("rediskeys", redisKeys);
+                }
             }
             catch (e) {
                 console.log(`[ Redis Plugin ] - ${e.message}`);

@@ -19,7 +19,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 exports.default = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-    var redisConfig, env, configApproved, redis, redisLoadBalance;
+    var redisConfig, env, configApproved, redis, redisLoadBalance, redisKeys;
     return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
             switch (_context.prev = _context.next) {
@@ -65,6 +65,13 @@ exports.default = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(functi
                                     redisLoadBalance = new _LoadBalance2.default(redisConfig['slaves']);
 
                                     _scope.$.set("redislb", redisLoadBalance);
+                                }
+                                if (Object.prototype.hasOwnProperty.call(env, "REDIS_KEYS_HOST")) {
+                                    redisConfig["host"] = env.REDIS_KEYS_HOST;
+                                    redisConfig["port"] = env.REDIS_KEYS_PORT || env.REDIS_PORT;;
+                                    redisKeys = new _Redis2.default(redisConfig);
+
+                                    _scope.$.set("rediskeys", redisKeys);
                                 }
                             } catch (e) {
                                 console.log("[ Redis Plugin ] - " + e.message);
