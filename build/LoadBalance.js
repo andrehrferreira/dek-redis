@@ -33,7 +33,8 @@ var RedisLoadBalance = function () {
             var slaveRedis = new _Redis2.default(slaveSettings);
 
             slaveRedis.on("connect", function () {
-                if (process.env.DEBUG) console.log("[ Redis ] - Slave redis connected!", slaveSettings);
+                //if(process.env.DEBUG)
+                //    console.log("[ Redis ] - Slave redis connected!", slaveSettings);
             });
 
             slaveRedis.on("error", function (error) {
