@@ -13,8 +13,8 @@ class RedisLoadBalance {
         let slaveRedis = new Redis(slaveSettings);
 
         slaveRedis.on("connect", () => {
-            if(process.env.DEBUG)
-                console.log("[ Redis ] - Slave redis connected!", slaveSettings);
+            //if(process.env.DEBUG)
+            //    console.log("[ Redis ] - Slave redis connected!", slaveSettings);
         });
 
         slaveRedis.on("error", (error) => {
